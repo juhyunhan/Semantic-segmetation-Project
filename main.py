@@ -27,6 +27,7 @@ def train_one_epoch(dataloaders, model, optimizer, criterion, device):
                 
                 if phase == "train":
                     optimizer.zero_grad()
+                    loss.requires_grad_(True)
                     loss.backward()
                     optimizer.step()
             
@@ -34,7 +35,7 @@ def train_one_epoch(dataloaders, model, optimizer, criterion, device):
             running_dice_coeff += dice_coefficient.item()
             
             if phase == "train":
-                if index % 100 == 0:
+                if index % 2 == 0:
                     text = f"{index}/{len(dataloaders[phase])}" + \
                             f" - Running Loss: {loss.item():.4f}" + \
                             f" - Running Dice: {dice_coefficient.item():.4f}" 
